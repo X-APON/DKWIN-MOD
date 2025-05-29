@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: white;
+            padding: 20px;
+        }
+        .banner {
+            font-size: 24px;
+            font-weight: bold;
+            color: cyan;
+            margin-bottom: 20px;
+        }
+        .box {
+            display: inline-block;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 8px;
+            font-size: 22px;
+            font-weight: bold;
+            background: #222;
+        }
+        .big { background: red; color: white; }
+        .small { background: blue; color: white; }
+        #timer { font-size: 20px; color: yellow; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="banner">🤑DK WIN GAME EXPERT SIGNAL🤑</div>
+    <div class="box">🇧🇩LIVE PREIOD🇧🇩<span id="period">Loading...</span></div>
+    <div class="box" id="prediction">Prediction: Loading...</div>
+    <div id="timer">⏱️<span id="countdown">60</span>⏱️</div>
+
+    <script>
+        function updatePeriod() {
+            const now = new Date();
+            now.setSeconds(0, 0); // Reset seconds for accuracy
+            
+            const start = new Date(now);
+            start.setHours(5, 29, 0, 0); // Set start time to 5:29 AM IST
+
+            let elapsedMinutes = 0;
+            if (now >= start) {
+                elapsedMinutes = Math.floor((now - start) / 60000);
+            }
+
+            const formattedDate = now.getFullYear() +
+                                 ('0' + (now.getMonth() + 1)).slice(-2) +
+                                 ('0' + now.getDate()).slice(-2);
+
+            const periodString = "10001" + String(elapsedMinutes).padStart(4, '0');
+            const currentPeriod = formattedDate + periodString;
+            
+            document.getElementById("period").innerText = currentPeriod;
+
+            // Prediction logic
+            const lastDigit = parseInt(currentPeriod.slice(-1));
+            const prediction = (lastDigit >= 5) ? "Big" : "Small";
+            document.getElementById("prediction").innerHTML = 
+                ` <span class="${prediction.toLowerCase()}">${prediction}</span>`;
+        }
+
+        function startCountdown() {
+            let count = 60;
+            setInterval(() => {
+                document.getElementById("countdown").innerText = count;
+                count--;
+                if (count < 0) {
+                    count = 60;
+                    updatePeriod(); // Update period every 60 seconds
+                }
+            }, 1000);
+        }
+
+        updatePeriod();
+        startCountdown();
+    </script>
+
+</body>
+</html>
